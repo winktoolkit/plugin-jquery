@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		
+		<!-- THEME UTILITY -->
+		<link rel="stylesheet" href="../../../wink/_themes/utils/loader.css" type="text/css">
+		<!-- END THEME UTILITY -->
+		
+		<!-- THEME UTILITY -->
+		<script type="text/javascript" src="../../../wink/_themes/utils/loader.js"></script>
+		<!-- END THEME UTILITY -->
+		
+		<!-- CORE -->
+		<!-- Can be replaced by wink.min.js -->
+		<script type="text/javascript" src="../../../wink/_amd/js/amd.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/_base/js/base.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/_dom/js/dom.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/error/js/error.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/json/js/json.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/ua/js/ua.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/topics/js/topics.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/_feat/js/feat.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/_feat/js/feat_json.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/_feat/js/feat_css.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/_feat/js/feat_event.js"></script>
+		<script type="text/javascript" src="../../../wink/_base/_feat/js/feat_dom.js"></script>
+		<script type="text/javascript" src="../../../wink/fx/_xy/js/2dfx.js"></script>
+		<script type="text/javascript" src="../../../wink/math/_basics/js/basics.js"></script>
+		<script type="text/javascript" src="../../../wink/net/xhr/js/xhr.js"></script>
+		<script type="text/javascript" src="../../../wink/ui/xy/layer/js/layer.js"></script>
+		<script type="text/javascript" src="../../../wink/ux/event/js/event.js"></script>
+		<script type="text/javascript" src="../../../wink/ux/touch/js/touch.js"></script>
+		<!-- END CORE -->
+		
+		<script type="text/javascript" src="../js/jquery-1.8.2.js"></script>
+		<script type="text/javascript" src="../js/winkjquery.js"></script>
+		
+		<style>
+			#container {
+				background-color: #fff;
+				height: 200px;
+				width: 300px;
+				border: 1px solid #000;
+				margin: 5px;
+			}
+			
+			#actions {
+				width: 300px;
+			}
+			
+			.box {
+				background-color: #00f;
+				height: 50px;
+				width: 50px;
+				position: relative;
+				top: 10px;
+				left: 10px;
+			}
+		</style>
+		
+		<script>
+			var init = function()
+			{
+				$$('#box').addClass('box');
+				reset();
+			};
+			
+			var reset = function()
+			{
+				$$('#box')[0].style.cssText = "";
+			};
+			
+			var execute = function(wrapper, callback)
+			{
+				reset();
+				setTimeout(function() {
+					wrapper('#box').onTransitionEnd(callback).applyTransformTransition("2s", "1ms", "linear").translate(200, 100).rotate(45);
+				}, 500);
+			};
+			
+			var testWink = function()
+			{
+				execute($$, function() {
+					// wink fadeout
+					$$('#box').applyTransition("opacity", "500ms", "0ms", "linear").apply({ "opacity": 0 });
+				});
+			};
+			
+			var testJQuery = function()
+			{
+				if (window.$ && window.$ != window.jQuery) {
+					alert("Oups: jQuery is not included or is not correctly defined");
+					return;
+				}
+				execute($, function() {
+					// jQuery fadeout
+					$('#box').fadeOut();
+				});
+			};
+		</script>
+	</head>
+	<body onload="init()">
+		<div class="w_box w_header w_bg_dark">
+			<span id="title">wink jQuery</span>
+			<input type="button" value="home" class="w_button w_radius w_bg_light w_right" onclick="window.location='../../..?theme='+theme"/>
+		</div>
+		
+		<div class="w_bloc">
+			<div>
+				Test wink and jquery with a plugin: both libs are included.
+				The same test's code is executed, the same result is expected.
+				The unique difference is the wrapper used ($ or $$).
+				You must see a blue box that slides smoothly.
+				After the slide, a specific code is executed in order to check that
+				the original wrapper is not overwritten.
+			</div>
+			<br/>
+			<div id="actions" class="w_layout_box">
+				<div class="w_button w_radius w_bg_light w_right" onclick="testWink();">testWink</div>
+				<div class="w_button w_radius w_bg_light w_right" onclick="testJQuery();">testJQuery</div>
+			</div>
+		</div>
+		
+		<div id="container">
+			<div id="box"></div>
+		</div>
+	</body>
+</html>
